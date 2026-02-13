@@ -7,7 +7,7 @@
 #define WALL '#'
 #define PLAYER 'P'
 #define ENEMY 'E'
-#define COIN 'O'
+#define CHEST 'C'
 
 struct Vector2 {
 	int x;
@@ -81,7 +81,7 @@ void IniciarDungeon(std::vector<std::vector<char >>& Dungeon, Player& IPlayer, i
 	{
 		for (int j = 0; j < Dungeon[i].size(); j++)
 		{
-			if (Dungeon[i][j] == COIN)
+			if (Dungeon[i][j] == CHEST)
 			{
 				Coins++;
 			}
@@ -140,7 +140,7 @@ void MoverP(std::vector<std::vector<char>>& Dungeon, Player& IPlayer)
 	case WALL:
 		IPlayer.position = IPlayerLastPos;
 		break;
-	case COIN:
+	case CHEST:
 		IPlayer.coins++;
 		break;
 	case ENEMY:
