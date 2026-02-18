@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-// # = PARED | P = PLAYER | E = ENEMY | O = COIN
+// # = PARED | P = PLAYER | E = ENEMY | C= CHESt
 #define WALL '#'
 #define PLAYER 'P'
 #define ENEMY 'E'
@@ -16,13 +16,13 @@ struct Vector2 {
 
 struct Player {
 	Vector2 position;
-	int coins;
 	int vidas;
+	float attk;
 
 };
 
 
-/*
+
 void SaveMap(std::vector<std::vector<char >>& Dungeon, std::vector<std::vector<char >> DungeonSave, std::string Fichero)
 {
 	std::ofstream File;
@@ -41,7 +41,7 @@ void SaveMap(std::vector<std::vector<char >>& Dungeon, std::vector<std::vector<c
 
 	File.close();
 }
-*/
+
 
 void LeerMapa(std::vector<std::vector<char >>& Dungeon, std::string Fichero)
 {
@@ -52,7 +52,6 @@ void LeerMapa(std::vector<std::vector<char >>& Dungeon, std::string Fichero)
 		std::cout << "Error al abrir";
 		exit(0);
 	}
-
 	std::string Line;
 	while (getline(File, Line))
 	{
@@ -71,19 +70,16 @@ void LeerMapa(std::vector<std::vector<char >>& Dungeon, std::string Fichero)
 	File.close();
 }
 
-
-void IniciarDungeon(std::vector<std::vector<char >>& Dungeon, Player& IPlayer, int& Coins)
+void IniciarDungeon(std::vector<std::vector<char >>& Dungeon, Player& IPlayer)
 {
 	bool playerGetted = false;
-
-
 	for (int i = 0; i < Dungeon.size(); i++)
 	{
 		for (int j = 0; j < Dungeon[i].size(); j++)
 		{
 			if (Dungeon[i][j] == CHEST)
 			{
-				Coins++;
+				// CHESTS;
 			}
 			else if (Dungeon[i][j] == PLAYER && !playerGetted)
 			{
@@ -94,9 +90,7 @@ void IniciarDungeon(std::vector<std::vector<char >>& Dungeon, Player& IPlayer, i
 		}
 		std::cout << std::endl;
 	}
-
 }
-
 
 void ImprimirMapa(std::vector<std::vector<char >>& Dungeon)
 {
@@ -119,32 +113,42 @@ void MoverP(std::vector<std::vector<char>>& Dungeon, Player& IPlayer)
 	std::cin >> InputChar;
 	switch (InputChar)
 	{
+		// MOVES
 	case 'W':
 		IPlayer.position.x--;
 		break;
-
 	case 'S':
 		IPlayer.position.x++;
 		break;
-
 	case 'A':
 		IPlayer.position.y--;
 		break;
 	case 'D':
 		IPlayer.position.y++;
 		break;
-	}
+		// SAVE
+	case 'E':
 
+		break;
+		// QUIT
+	case 'Q':
+
+		break;
+	}
+	// OBSTACLES
 	switch (Dungeon[IPlayer.position.x][IPlayer.position.y])
 	{
 	case WALL:
 		IPlayer.position = IPlayerLastPos;
 		break;
 	case CHEST:
-		IPlayer.coins++;
+		/////////////
+
 		break;
 	case ENEMY:
-		IPlayer.vidas--;
+
+		
+		//IPlayer.vidas--;
 		break;
 	}
 
@@ -161,27 +165,25 @@ int main()
 	Player IPlayer;
 	IPlayer.position.x = 0;
 	IPlayer.position.y = 0;
-	IPlayer.coins = 0;
-	IPlayer.vidas = 1;
-
-	int Coins = 0;
+	IPlayer.vidas = 3;
+	IPlayer.attk = 100/3;
 
 	LeerMapa(Dungeon, "TestDungeon.csv");
-	IniciarDungeon(Dungeon, IPlayer, Coins);
+	IniciarDungeon(Dungeon, IPlayer);
 
 	do
 	{
 
 		ImprimirMapa(Dungeon);
-
+		std::cout << "MOVE [A / W / S / D] | SAV[E]| [Q]UIT" << std::endl;
 		MoverP(Dungeon, IPlayer);
 
 		system("cls");
-	} while (IPlayer.coins != Coins && IPlayer.vidas > 0);
+	} while (IPlayer.vidas > 0);
 
-	if (IPlayer.coins == Coins) std::cout << "YOU WIN" << std::endl;
-	else if (IPlayer.vidas == 0) std::cout << "YOU DIED" << std::endl;
-
+	/// if () std::cout << "YOU WIN" << std::endl;
+	if (IPlayer.vidas == 0) std::cout << "YOU DIED" << std::endl;
+	
 
 
 	return 0;
