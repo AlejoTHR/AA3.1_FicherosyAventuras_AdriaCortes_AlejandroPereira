@@ -13,6 +13,7 @@ void SaveMap(std::vector<std::vector<char >>& Dungeon, std::vector<std::vector<c
 	for (int i = Dungeon.size() - 1; i >= 0; i--)
 	{
 		DungeonSave.push_back(Dungeon[i]);
+		std::cout << "Se ha guardado el archivo.";
 	}
 
 
@@ -82,7 +83,7 @@ void ImprimirMapa(std::vector<std::vector<char >>& Dungeon)
 
 }
 
-void MoverP(std::vector<std::vector<char>>& Dungeon, Player& IPlayer)
+void MoverP(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<char>>& DungeonSave, Player& IPlayer)
 {
 	char InputChar;
 	Vector2 IPlayerLastPos = IPlayer.position;
@@ -105,7 +106,7 @@ void MoverP(std::vector<std::vector<char>>& Dungeon, Player& IPlayer)
 		break;
 		// SAVE
 	case 'E':
-
+		SaveMap(Dungeon, DungeonSave, "SaveMap.csv");
 		break;
 		// QUIT
 	case 'Q':
@@ -153,7 +154,7 @@ int main()
 
 		ImprimirMapa(Dungeon);
 		std::cout << "MOVE [A / W / S / D] | SAV[E]| [Q]UIT" << std::endl;
-		MoverP(Dungeon, IPlayer);
+		MoverP(Dungeon, DungeonSave, IPlayer);
 
 		system("cls");
 	} while (IPlayer.vidas > 0);
