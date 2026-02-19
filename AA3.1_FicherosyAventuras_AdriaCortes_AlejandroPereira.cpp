@@ -1,27 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-
-// # = PARED | P = PLAYER | E = ENEMY | C= CHESt
-#define WALL '#'
-#define PLAYER 'P'
-#define ENEMY 'E'
-#define CHEST 'C'
-
-struct Vector2 {
-	int x;
-	int y;
-};
-
-struct Player {
-	Vector2 position;
-	int vidas;
-	float attk;
-
-};
-
-
+#include "Header.h"
 
 void SaveMap(std::vector<std::vector<char >>& Dungeon, std::vector<std::vector<char >> DungeonSave, std::string Fichero)
 {
@@ -29,7 +6,7 @@ void SaveMap(std::vector<std::vector<char >>& Dungeon, std::vector<std::vector<c
 	File.open(Fichero);
 	if (!File.is_open())
 	{
-		std::cout << "Error al abrir";
+		std::cout << "Error al abrir, el archivo ya esta abierto!";
 		exit(0);
 	}
 
