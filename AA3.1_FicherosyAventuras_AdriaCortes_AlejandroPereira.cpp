@@ -112,6 +112,26 @@ void MoverP(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<cha
 	case 'Q':
 
 		break;
+	case 'w':
+		IPlayer.position.x--;
+		break;
+	case 's':
+		IPlayer.position.x++;
+		break;
+	case 'a':
+		IPlayer.position.y--;
+		break;
+	case 'd':
+		IPlayer.position.y++;
+		break;
+		// SAVE
+	case 'e':
+		SaveMap(Dungeon, DungeonSave, "SaveMap.csv");
+		break;
+		// QUIT
+	case 'q':
+
+		break;
 	}
 	// OBSTACLES
 	switch (Dungeon[IPlayer.position.x][IPlayer.position.y])
