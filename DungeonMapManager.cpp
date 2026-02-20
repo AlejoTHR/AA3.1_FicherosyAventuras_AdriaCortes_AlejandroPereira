@@ -18,7 +18,7 @@ void ReadMap(std::vector<std::vector<char >>& Dungeon, std::string Fichero)
 		{
 			if (Line[i] == ';')	continue;
 
-			else if (Line[i] == '.') tmpLine.push_back(' ');
+			else if (Line[i] == '.') tmpLine.push_back(VOID);
 
 			else tmpLine.push_back(Line[i]);
 
@@ -41,8 +41,8 @@ void StartDungeonMap(std::vector<std::vector<char >>& Dungeon, Player& IPlayer)
 			}
 			else if (Dungeon[i][j] == PLAYER && !playerGetted)
 			{
-				IPlayer.position.x = i;
-				IPlayer.position.y = j;
+				IPlayer.pos.x = i;
+				IPlayer.pos.y = j;
 				playerGetted = true;
 			}
 		}

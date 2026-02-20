@@ -5,61 +5,59 @@
 void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<char>>& DungeonSave, Player& IPlayer)
 {
 	char InputChar;
-	Vector2 IPlayerLastPos = IPlayer.position;
+	Vector2 IPlayerLastPos = IPlayer.pos;
 
 	std::cin >> InputChar;
 	switch (InputChar)
 	{
 		// MOVES
 	case 'W':
-		IPlayer.position.x--;
+		IPlayer.pos.x--;
 		break;
 	case 'S':
-		IPlayer.position.x++;
+		IPlayer.pos.x++;
 		break;
 	case 'A':
-		IPlayer.position.y--;
+		IPlayer.pos.y--;
 		break;
 	case 'D':
-		IPlayer.position.y++;
+		IPlayer.pos.y++;
 		break;
-		// SAVE
+
+	case 'w':
+		IPlayer.pos.x--;
+		break;
+	case 's':
+		IPlayer.pos.x++;
+		break;
+	case 'a':
+		IPlayer.pos.y--;
+		break;
+	case 'd':
+		IPlayer.pos.y++;
+		break;
+
+
+		// SAVE n QUIT
 	case 'E':
 		SaveMap(Dungeon, DungeonSave, "SaveMap.csv");
 		break;
-		// QUIT
-	case 'Q':
 
-		break;
-	case 'w':
-		IPlayer.position.x--;
-		break;
-	case 's':
-		IPlayer.position.x++;
-		break;
-	case 'a':
-		IPlayer.position.y--;
-		break;
-	case 'd':
-		IPlayer.position.y++;
-		break;
-		// SAVE
 	case 'e':
 		SaveMap(Dungeon, DungeonSave, "SaveMap.csv");
 		break;
-		// QUIT
-	case 'q':
-
-		break;
 	}
+
 	// OBSTACLES
-	switch (Dungeon[IPlayer.position.x][IPlayer.position.y])
+	switch (Dungeon[IPlayer.pos.x][IPlayer.pos.y])
 	{
 	case WALL:
-		IPlayer.position = IPlayerLastPos;
+		IPlayer.pos = IPlayerLastPos;
 		break;
 	case CHEST:
-		/////////////
+
+		std::cout << std::endl << "YOU FOUND A CHEST AND GOT....." << std::endl;
+
 
 		break;
 	case ENEMY:
@@ -71,7 +69,7 @@ void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std:
 
 
 	Dungeon[IPlayerLastPos.x][IPlayerLastPos.y] = ' ';
-	Dungeon[IPlayer.position.x][IPlayer.position.y] = (IPlayer.vidas <= 0) ? 'X' : PLAYER;
+	Dungeon[IPlayer.pos.x][IPlayer.pos.y] = (IPlayer.lifes <= 0) ? 'X' : PLAYER;
 }
 
 int main()
@@ -80,9 +78,9 @@ int main()
 	std::vector<std::vector<char >> DungeonSave;
 
 	Player IPlayer;
-	IPlayer.position.x = 0;
-	IPlayer.position.y = 0;
-	IPlayer.vidas = 3;
+	IPlayer.pos.x = 0;
+	IPlayer.pos.y = 0;
+	IPlayer.lifes = 3;
 	IPlayer.attk = 100/3;
 
 	ReadMap(Dungeon, "TestDungeon.csv");
@@ -96,10 +94,10 @@ int main()
 		PlayerInteraction(Dungeon, DungeonSave, IPlayer);
 
 		system("cls");
-	} while (IPlayer.vidas > 0);
+	} while (IPlayer.lifes > 0);
 
 	/// if () std::cout << "YOU WIN" << std::endl;
-	if (IPlayer.vidas == 0) std::cout << "YOU DIED" << std::endl;
+	if (IPlayer.lifes == 0) std::cout << "YOU DIED" << std::endl;
 	
 
 
