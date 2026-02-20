@@ -127,10 +127,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AA3.1_FicherosyAventuras_AdriaCortes_AlejandroPereira.cpp" />
+    <ClCompile Include="DungeonChargeSys.cpp" />
+    <ClCompile Include="DungeonMapManager.cpp" />
+    <ClCompile Include="DungeonSavingSyscpp.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header.h" />
+    <ClInclude Include="CONS.h" />
+    <ClInclude Include="DungeonMapManager.h" />
+    <ClInclude Include="DungeonSavingSys.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
