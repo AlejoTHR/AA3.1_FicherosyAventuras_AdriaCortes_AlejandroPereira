@@ -126,7 +126,7 @@ void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std:
 		break;
 		// SAVE
 	case 'e':
-		SaveMap(Dungeon, DungeonSave, "SaveMap.csv");
+		SaveMap(Dungeon, DungeonSave, "partida.dat");
 		break;
 		// QUIT
 	case 'q':

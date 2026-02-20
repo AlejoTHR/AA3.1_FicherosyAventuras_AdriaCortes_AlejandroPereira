@@ -24,7 +24,7 @@ void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std:
 		IPlayer.position.y++;
 		break;
 		// SAVE
-	case 'E':
+	case 'E': case 'e':
 		SaveMap(Dungeon, DungeonSave, "SaveMap.csv");
 		break;
 		// QUIT
@@ -42,10 +42,6 @@ void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std:
 		break;
 	case 'd':
 		IPlayer.position.y++;
-		break;
-		// SAVE
-	case 'e':
-		SaveMap(Dungeon, DungeonSave, "SaveMap.csv");
 		break;
 		// QUIT
 	case 'q':
