@@ -19,7 +19,7 @@ struct Vector2 {
 
 struct Player {
 	std::string Name;
-	Vector2 pos;
+	Vector2 position;
 	int lifes;
 	int gold;
 	float attk;
