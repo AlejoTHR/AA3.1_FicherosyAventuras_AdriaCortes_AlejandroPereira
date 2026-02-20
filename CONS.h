@@ -10,6 +10,7 @@
 #define PLAYER 'P'
 #define ENEMY 'E'
 #define CHEST 'C'
+#define VOID ' '
 
 struct Vector2 {
 	int x;
@@ -17,8 +18,14 @@ struct Vector2 {
 };
 
 struct Player {
-	Vector2 position;
-	int vidas;
+	std::string Name;
+	Vector2 pos;
+	int lifes;
+	int gold;
 	float attk;
+};
 
+struct Item {
+	std::string name;
+	float attkbonus;
 };
