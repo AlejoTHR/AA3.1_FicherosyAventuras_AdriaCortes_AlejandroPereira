@@ -10,7 +10,7 @@
 #define PLAYER 'P'
 #define ENEMY 'E'
 #define CHEST 'C'
-#define VOID ' '
+#define VOID '.'
 
 struct Vector2 {
 	int x;

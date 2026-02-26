@@ -14,10 +14,9 @@ void SaveMap(std::vector<std::vector<char >>& Dungeon, std::vector<std::vector<c
 	for (int i = Dungeon.size() - 1; i >= 0; i--)
 	{
 		DungeonSave.push_back(Dungeon[i]);
-		std::cout << "Se ha guardado el archivo.";
 	}
-
-
+	std::cout << "Se ha guardado el archivo.";
+	system("pause");
 	File.close();
 }
 

@@ -35,14 +35,10 @@ void StartDungeonMap(std::vector<std::vector<char >>& Dungeon, Player& IPlayer)
 	{
 		for (int j = 0; j < Dungeon[i].size(); j++)
 		{
-			if (Dungeon[i][j] == CHEST)
+			if (Dungeon[i][j] == PLAYER && !playerGetted)
 			{
-				// CHESTS;
-			}
-			else if (Dungeon[i][j] == PLAYER && !playerGetted)
-			{
-				IPlayer.pos.x = i;
-				IPlayer.pos.y = j;
+				IPlayer.position.x = i;
+				IPlayer.position.y = j;
 				playerGetted = true;
 			}
 		}
