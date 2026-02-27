@@ -13,19 +13,24 @@
 #define VOID '.'
 
 struct Vector2 {
-	int x;
-	int y;
+	unsigned int x;
+	unsigned int y;
 };
 
 struct Player {
 	std::string Name;
 	Vector2 position;
-	int lifes;
-	int gold;
-	float attk;
+	unsigned short lifes = 0;
+	unsigned int  gold = 0;
+	float attk = 0;
 };
 
 struct Item {
 	std::string name;
-	float attkbonus;
+	float attkbonus = 0;
 };
+
+struct Enemy {
+	Vector2 Position;
+};
+

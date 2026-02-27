@@ -10,10 +10,13 @@ void ReadMap(std::vector<std::vector<char >>& Dungeon, std::string Fichero)
 		std::cout << "Error al abrir";
 		exit(0);
 	}
+
 	std::string Line;
+
 	while (getline(File, Line))
 	{
 		std::vector<char> tmpLine;
+
 		for (unsigned int i = 0; i < Line.size(); i++)
 		{
 			if (Line[i] == ';')	continue;
@@ -25,12 +28,14 @@ void ReadMap(std::vector<std::vector<char >>& Dungeon, std::string Fichero)
 		}
 		Dungeon.push_back(tmpLine);
 	}
+	
 	File.close();
 }
 
 void StartDungeonMap(std::vector<std::vector<char >>& Dungeon, Player& IPlayer)
 {
 	bool playerGetted = false;
+
 	for (int i = 0; i < Dungeon.size(); i++)
 	{
 		for (int j = 0; j < Dungeon[i].size(); j++)
@@ -45,6 +50,7 @@ void StartDungeonMap(std::vector<std::vector<char >>& Dungeon, Player& IPlayer)
 		std::cout << std::endl;
 	}
 }
+
 
 void PrintDungeonMap(std::vector<std::vector<char >>& Dungeon)
 {
