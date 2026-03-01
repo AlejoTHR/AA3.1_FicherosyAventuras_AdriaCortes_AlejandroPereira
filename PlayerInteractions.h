@@ -9,7 +9,10 @@ void PrintMainmenu(int& MenuInput);
 void PlayerInput(char& InputChar);
 
 // READS ITEMS FILE AND SELECTS 1 RANDOMLY AND GRANTS A RANDOM AMOUNT OF GOLD
-void ChestFound();
+void ChestFound(Player& IPlayer);
+
+// 1/3 CHANCE OF WINNING A FIGHT AND NOT LOSING A LIFE. CHANCES INCREASE WITH CHEST ITEMS
+void StartCombat(Player& IPlayer);
 
 // ALL USER INTERACTION AND OBSTACLES 
 void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<char>>& DungeonSave, std::string Fichero, Player& IPlayer, char& InputChar);

@@ -24,9 +24,31 @@ void PlayerInput(char& InputChar)
 }
 
 
-void ChestFound()
+void ChestFound(Player& IPlayer)
 {
+	// IPlayer.attk += Item attkbonus;
 
+}
+
+void StartCombat(Player& IPlayer)
+{
+	srand(time(0));
+	system("cls");
+
+	float fightNumber = rand() % 3;
+
+	std::cout << "_- You got into a fight! -_" << std::endl;
+
+	if (fightNumber > IPlayer.attk)
+	{
+		IPlayer.lifes--;
+		std::cout << "You lost the fight and lost a life..." << std::endl;
+	}
+	else
+	{
+		std::cout << "You won the fight!" << std::endl;
+	}
+	system("pause");
 
 }
 
@@ -75,12 +97,13 @@ void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std:
 		break;
 
 	case CHEST:
-		ChestFound();
+		ChestFound(IPlayer);
 
 		break;
 	case ENEMY:
 
-		//IPlayer.position = IPlayerLastPos;
+		StartCombat(IPlayer);
+		
 		//IPlayer.lifes--;
 		break;
 	}

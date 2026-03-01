@@ -16,7 +16,7 @@ int main()
 	IPlayer.position.x = 0;
 	IPlayer.position.y = 0;
 	IPlayer.lifes = 3;
-	IPlayer.attk = 100 / 3;
+	IPlayer.attk = 1;
 
 	char InputChar = 'O';
 
