@@ -20,6 +20,8 @@ int main()
 	IPlayer.lifes = 3;
 	IPlayer.attk = 1;
 
+	Item slots[3];
+
 	// SUPORTING VARIABLES
 	char InputChar = 'O';
 
@@ -45,6 +47,7 @@ int main()
 
 		do
 		{
+			ViewSlots(slots);
 			PrintDungeonMap(Dungeon);
 
 

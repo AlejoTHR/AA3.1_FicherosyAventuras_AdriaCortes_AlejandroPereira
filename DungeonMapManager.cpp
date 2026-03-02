@@ -59,9 +59,24 @@ void StartDungeonMap(std::vector<std::vector<char >>& Dungeon, Player& IPlayer, 
 	}
 }
 
+void ViewSlots(Item slots[3]) {
+	std::cout << "_- INVENTORY -_" << std::endl;
+	for (size_t i = 0; i < 3; i++)
+	{
+		std::cout << "[" << slots[i].item << "]";
+	}
+	std::cout << std::endl;
+	for (size_t i = 0; i < 3; i++)
+	{
+		std::cout << " " << slots[i].amount << " ";
+	}
+	std::cout << std::endl << std::endl;
+
+}
 
 void PrintDungeonMap(std::vector<std::vector<char >>& Dungeon)
 {
+	std::cout << "_- DUNGEON -_" << std::endl;
 	for (int i = 0; i < Dungeon.size(); i++)
 	{
 		for (int j = 0; j < Dungeon[i].size(); j++)// FOR THE "X" AND "Y" AXIS IN THE VECTOR...
