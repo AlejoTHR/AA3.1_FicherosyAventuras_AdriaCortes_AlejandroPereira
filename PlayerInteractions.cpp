@@ -6,11 +6,14 @@
 
 void PrintMainmenu(int& MenuInput)
 {
+	do
+	{
+		std::cout << "\t--||:: FILES & ADVENTURES ::||--\n" << "\t\t ::Main Menu::\n\n";
+		std::cout << "\n1) New Game\n2) Continue Game\n3) Exit\n\n";
+		std::cin >> MenuInput;
+		system("cls");
+	} while (MenuInput < 0 || MenuInput > 3);
 
-	std::cout << "\t--||:: FILES & ADVENTURES ::||--\n" << "\t\t ::Main Menu::\n\n";
-
-	std::cout << "\n1) New Game\n2) Continue Game\n3) Exit\n\n";
-	std::cin >> MenuInput;
 
 
 }
@@ -34,6 +37,16 @@ void PlayerInput(char& InputChar)
 
 void ChestFound(Player& IPlayer)
 {
+	system("cls");
+	std::cout << "\t::: A CHEST WAS FOUND :::\n";
+	int randGold = 10 + rand() % (100 - 10);
+	IPlayer.gold += randGold;
+
+	std::cout << "YOU FOUND : " << randGold << " G" << std::endl;
+	system("pause");
+	system("cls");
+
+
 	// IPlayer.attk += Item attkbonus;
 
 }

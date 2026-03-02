@@ -5,30 +5,33 @@ void ReadMap(std::vector<std::vector<char >>& Dungeon, std::string Fichero, bool
 {
 	std::ifstream File;
 	File.open(Fichero);
-	if (!File.is_open())
+	if (!File.is_open()) // CHECKS IF FILE CAN BE OPENED
 	{
-		std::cout << "Error al abrir";
+		std::cout << "[ERROR] The File could not be Opened";
 		exit(0);
 	}
 
-	std::string Line;
+	// TEMPORAL STRING VARIABLE FOR EVERY LINE READ
+	std::string Line; 
 
 	while (getline(File, Line))
-	{
-		std::vector<char> tmpLine;
+	{	
+		// VECTOR OF CHARS FOR THE TMP LINE
+		std::vector<char> tmpLine; 
 
 		for (unsigned int i = 0; i < Line.size(); i++)
 		{
-			if (Line[i] == ';')	continue;
+			if (Line[i] == ';')	continue; // IF ";" IS READED; DOES NOT READ IR
 
-			else if (Line[i] == '.') tmpLine.push_back(VOID);
+			else if (Line[i] == '.') tmpLine.push_back(VOID); // IF ":" IS READED, KEEPS IT
 
-			else if (playerGetted == true && Line[i] == PLAYER) tmpLine.push_back(VOID);
+			// IF LOAD GAME IN MENU, DOES NOT REGISTERS THE "P" IN THE CSV FILE
+			else if (playerGetted == true && Line[i] == PLAYER) tmpLine.push_back(VOID); 
 
-			else tmpLine.push_back(Line[i]);
+			else tmpLine.push_back(Line[i]); // NOTHING WEIRD IN THE LINE; SAVES THE WHOLE LINE
 
 		}
-		Dungeon.push_back(tmpLine);
+		Dungeon.push_back(tmpLine); // SAVES ALL READ LINES IN THE DUNGEON VECTOR TO PRINT LATER
 	}
 	
 	File.close();
@@ -39,15 +42,15 @@ void StartDungeonMap(std::vector<std::vector<char >>& Dungeon, Player& IPlayer, 
 
 	for (int i = 0; i < Dungeon.size(); i++)
 	{
-		for (int j = 0; j < Dungeon[i].size(); j++)
+		for (int j = 0; j < Dungeon[i].size(); j++) // FOR THE "X" AND "Y" AXIS IN THE VECTOR...
 		{
-			if (Dungeon[i][j] == PLAYER && !playerGetted)
+			if (Dungeon[i][j] == PLAYER && !playerGetted) // IF NOT LOADED; "P" IN MAP IS PLAYER POSITION
 			{
 				IPlayer.position.x = i;
 				IPlayer.position.y = j;
 				playerGetted = true;
 			}
-			else if (playerGetted)
+			else if (playerGetted) // IF LOADED; LAST SAVED POSITION IS PLAYER POSITION
 			{
 				Dungeon[IPlayer.position.x][IPlayer.position.y] = PLAYER;
 			}
@@ -61,9 +64,9 @@ void PrintDungeonMap(std::vector<std::vector<char >>& Dungeon)
 {
 	for (int i = 0; i < Dungeon.size(); i++)
 	{
-		for (int j = 0; j < Dungeon[i].size(); j++)
+		for (int j = 0; j < Dungeon[i].size(); j++)// FOR THE "X" AND "Y" AXIS IN THE VECTOR...
 		{
-			std::cout << Dungeon[i][j];
+			std::cout << Dungeon[i][j]; // PRINTS ALL CHARACTERS IN THE DUNGEON VECTOR
 		}
 		std::cout << std::endl;
 	}
