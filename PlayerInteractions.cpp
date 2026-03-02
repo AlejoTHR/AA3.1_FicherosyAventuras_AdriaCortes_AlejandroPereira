@@ -12,11 +12,19 @@ void PrintMainmenu(int& MenuInput)
 	std::cout << "\n1) New Game\n2) Continue Game\n3) Exit\n\n";
 	std::cin >> MenuInput;
 
+
+}
+void MenuSTATS(Player& IPlayer)
+{
+	system("cls");
+	std::cout << "--- STATS ---" << std::endl;
+	std::cout << "Lifes = " << IPlayer.lifes << std::endl << "Gold Obtained = " << IPlayer.gold << std::endl << "Attack Chance = " << IPlayer.attk << std::endl << std::endl;
+	system("pause");
 }
 
 void PlayerInput(char& InputChar)
 {
-	std::cout << "MOVE [A / W / S / D] | SAV[E]| [Q]UIT" << std::endl;
+	std::cout << "MOVE [A / W / S / D] | SAV[E]| [Q]UIT | S[T]ATS" << std::endl;
 	std::cin >> InputChar;
 	// TRANSFORMS CHAR INTO LOWER CASE AUTOMATICALLY
 	InputChar = (char)tolower(InputChar);
@@ -32,7 +40,6 @@ void ChestFound(Player& IPlayer)
 
 void StartCombat(Player& IPlayer)
 {
-	srand(time(0));
 	system("cls");
 
 	float fightNumber = rand() % 3;
@@ -51,6 +58,9 @@ void StartCombat(Player& IPlayer)
 	system("pause");
 
 }
+
+
+
 
 void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<char>>& DungeonSave, std::string Fichero, Player& IPlayer, char& InputChar)
 {
@@ -75,6 +85,10 @@ void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std:
 		break;
 	case 'd':
 		IPlayer.position.y++;
+		break;
+
+	case 't':
+		MenuSTATS(IPlayer);
 		break;
 
 		// SAVE

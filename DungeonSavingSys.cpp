@@ -85,7 +85,7 @@ void SaveGameData(std::string Fichero, Player& IPlayer)
 
 
 
-void ReadSaveData(std::string Fichero, Player& IPlayer)
+void ReadSaveData(std::string Fichero, Player& IPlayer, bool& playerGetted)
 {
 	std::cout << "Now Loading..." << std::endl << std::endl;
 
@@ -98,7 +98,6 @@ void ReadSaveData(std::string Fichero, Player& IPlayer)
 	}
 
 	////// PLAYER DATA
-	
 	Player TMPplayer;
 
 	// BIN GOLD
@@ -122,16 +121,21 @@ void ReadSaveData(std::string Fichero, Player& IPlayer)
 
 
 	//DEBUGING OPTION
-	
-	//std::cout << TMPplayer.gold << " | " << TMPplayer.position.x << " | " << TMPplayer.position.y << " | " << TMPplayer.lifes << " | " << TMPplayer.Name<< std::endl << std::endl;
-	//IPlayer.gold = TMPplayer.gold;
-	//IPlayer.position.x = TMPplayer.position.x;
-	//IPlayer.position.y = TMPplayer.position.y;
-	//IPlayer.lifes = TMPplayer.lifes;
-	//IPlayer.Name = TMPplayer.Name;
-	//std::cout << IPlayer.gold << " | " << IPlayer.position.x << " | " << IPlayer.position.y << " | " << IPlayer.lifes << " | " << IPlayer.Name << std::endl << std::endl;
+	std::cout << TMPplayer.gold << " | " << TMPplayer.position.x << " | " << TMPplayer.position.y << " | " << TMPplayer.lifes << " | " << TMPplayer.Name<< std::endl << std::endl;
+	std::cout << IPlayer.gold << " | " << IPlayer.position.x << " | " << IPlayer.position.y << " | " << IPlayer.lifes << " | " << IPlayer.Name << std::endl << std::endl;
 
-	std::cout << "Loaded" << std::endl;
+	//DEBUGING OPTION
+
+	IPlayer.gold = TMPplayer.gold;
+	IPlayer.position.x = TMPplayer.position.x;
+	IPlayer.position.y = TMPplayer.position.y;
+	IPlayer.lifes = TMPplayer.lifes;
+	IPlayer.Name = TMPplayer.Name;
+
+
+	playerGetted = true;
+
+	std::cout << std::endl << "Loaded Succesfuly" << std::endl;
 	system("pause");
 	system("cls");
 }

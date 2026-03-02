@@ -8,7 +8,7 @@
 void SaveGameData(std::string Fichero, Player& IPlayer);
 
 
-void ReadSaveData(std::string Fichero, Player& IPlayer);
+void ReadSaveData(std::string Fichero, Player& IPlayer, bool& playerGetted);
 
 
 

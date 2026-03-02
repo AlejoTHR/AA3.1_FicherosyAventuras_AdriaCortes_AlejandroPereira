@@ -1,7 +1,7 @@
 #pragma once
 #include "DungeonMapManager.h"
 
-void ReadMap(std::vector<std::vector<char >>& Dungeon, std::string Fichero)
+void ReadMap(std::vector<std::vector<char >>& Dungeon, std::string Fichero, bool& playerGetted)
 {
 	std::ifstream File;
 	File.open(Fichero);
@@ -23,6 +23,8 @@ void ReadMap(std::vector<std::vector<char >>& Dungeon, std::string Fichero)
 
 			else if (Line[i] == '.') tmpLine.push_back(VOID);
 
+			else if (playerGetted == true && Line[i] == PLAYER) tmpLine.push_back(VOID);
+
 			else tmpLine.push_back(Line[i]);
 
 		}
@@ -32,9 +34,8 @@ void ReadMap(std::vector<std::vector<char >>& Dungeon, std::string Fichero)
 	File.close();
 }
 
-void StartDungeonMap(std::vector<std::vector<char >>& Dungeon, Player& IPlayer)
+void StartDungeonMap(std::vector<std::vector<char >>& Dungeon, Player& IPlayer, bool playerGetted)
 {
-	bool playerGetted = false;
 
 	for (int i = 0; i < Dungeon.size(); i++)
 	{
@@ -45,6 +46,10 @@ void StartDungeonMap(std::vector<std::vector<char >>& Dungeon, Player& IPlayer)
 				IPlayer.position.x = i;
 				IPlayer.position.y = j;
 				playerGetted = true;
+			}
+			else if (playerGetted)
+			{
+				Dungeon[IPlayer.position.x][IPlayer.position.y] = PLAYER;
 			}
 		}
 		std::cout << std::endl;

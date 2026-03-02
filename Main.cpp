@@ -20,15 +20,23 @@ int main()
 
 	char InputChar = 'O';
 
+	bool playerGetted = false;
+
 	int MenuInput = 0;
 
-	ReadMap(Dungeon, "Sala.csv");
 
 	PrintMainmenu(MenuInput);
+	
+	if (MenuInput == 2)
+	{
+		ReadSaveData("partida.dat", IPlayer, playerGetted);
+	}
 
-	if (MenuInput == 2)	ReadSaveData("partida.dat", IPlayer);
+	ReadMap(Dungeon, "Sala.csv", playerGetted);
 
-	StartDungeonMap(Dungeon, IPlayer);
+
+
+	StartDungeonMap(Dungeon, IPlayer, playerGetted);
 
 
 	system("cls");
