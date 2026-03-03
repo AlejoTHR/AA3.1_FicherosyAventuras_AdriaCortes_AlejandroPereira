@@ -31,10 +31,6 @@ struct Item {
 	std::string name;
 	float attkbonus = 0;
 	char icon = ' ';
-	int amount;
-};
-
-struct Enemy {
-	Vector2 Position;
+	int amount = 0;
 };
 

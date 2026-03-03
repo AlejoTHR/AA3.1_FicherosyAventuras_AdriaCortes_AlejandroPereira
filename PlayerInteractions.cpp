@@ -16,6 +16,8 @@ void PrintMainmenu(int& MenuInput)
 	} while (MenuInput < 0 || MenuInput > 3);
 }
 
+
+
 // Display player stats
 void MenuSTATS(Player& IPlayer)
 {
@@ -138,7 +140,7 @@ void StartCombat(Player& IPlayer, Item slots[5])
 }
 
 // Handle player input and world interactions; pass items and inventory (5 slots).
-void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<char>>& DungeonSave, std::string Fichero, Player& IPlayer, char& InputChar, const std::vector<Item>& items, Item slots[5])
+void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<char>>& DungeonSave, std::string Fichero, Player& IPlayer, char& InputChar, const std::vector<Item>& items, Item slots[5], bool& endRun)
 {
 	PlayerInput(InputChar);
 
@@ -168,6 +170,10 @@ void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std:
 		break;
 
 	case 'q':
+		endRun = true;
+		system("cls");
+		std::cout << "\n\n\t\tYou exited the Dungeon Safely..." << std::endl << std::endl;
+		system("pause");
 		break;
 	}
 

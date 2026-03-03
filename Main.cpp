@@ -44,6 +44,8 @@ int main()
 
 	int MenuInput = 0;
 
+	bool endRun = false;
+
 	PrintMainmenu(MenuInput); // MAIN MENU UI
 
 	if (MenuInput < 3)
@@ -64,15 +66,18 @@ int main()
 			PrintDungeonMap(Dungeon);
 
 			// Pasamos la lista de items y el inventario (5 slots)
-			PlayerInteraction(Dungeon, DungeonSave, "partida.dat", IPlayer, InputChar, items, slots);
+			PlayerInteraction(Dungeon, DungeonSave, "partida.dat", IPlayer, InputChar, items, slots, endRun);
 
 			system("cls");
-		} while (IPlayer.lifes > 0);
+		} while (IPlayer.lifes > 0 && endRun != true);
 
-		if (IPlayer.lifes == 0) std::cout << "YOU DIED" << std::endl;
+		if (IPlayer.lifes == 0) 
+		{
+			std::cout << "YOU DIED" << std::endl;
+			system("pause");
+			system("cls");
+		}
 
-		system("pause");
-		system("cls");
 	}
 	else if (MenuInput == 3)
 	{

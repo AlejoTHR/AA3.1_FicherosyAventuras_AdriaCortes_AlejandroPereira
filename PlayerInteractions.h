@@ -15,5 +15,4 @@ void ChestFound(Player& IPlayer, const std::vector<Item>& items, Item slots[5]);
 void StartCombat(Player& IPlayer, Item slots[5]);
 
 // Handle all player interactions and obstacles. Inventory (5 slots) and items list are passed in.
-void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<char>>& DungeonSave, std::string Fichero, Player& IPlayer, char& InputChar, const std::vector<Item>& items, Item slots[5]);
-
+void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<char>>& DungeonSave, std::string Fichero, Player& IPlayer, char& InputChar, const std::vector<Item>& items, Item slots[5], bool& endRun);
