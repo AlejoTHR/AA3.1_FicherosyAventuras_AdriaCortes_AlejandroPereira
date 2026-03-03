@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 // # = PARED | P = PLAYER | E = ENEMY | C= CHESt
 #define WALL '#'
@@ -29,6 +30,8 @@ struct Player {
 struct Item {
 	std::string name;
 	float attkbonus = 0;
+	char icon = ' ';
+	int amount;
 };
 
 struct Enemy {

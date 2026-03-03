@@ -10,7 +10,7 @@ void StartDungeonMap(std::vector<std::vector<char >>& Dungeon, Player& IPlayer, 
 // PRINTS THE DUNGEON MAP
 void PrintDungeonMap(std::vector<std::vector<char >>& Dungeon);
 
-// ITEM HOTBAR OVER THE MAP
-void ViewSlots(Item slots[3]);
+// ITEM HOTBAR OVER THE MAP (5 slots)
+void ViewSlots(Item slots[5]);
 
 

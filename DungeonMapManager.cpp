@@ -59,19 +59,39 @@ void StartDungeonMap(std::vector<std::vector<char >>& Dungeon, Player& IPlayer, 
 	}
 }
 
-void ViewSlots(Item slots[3]) {
+void ViewSlots(Item slots[5]) {
 	std::cout << "_- INVENTORY -_" << std::endl;
-	for (size_t i = 0; i < 3; i++)
+
+	// Mostrar iconos (preferible) y fallback al nombre si no hay icono
+	for (size_t i = 0; i < 5; i++)
 	{
-		std::cout << "[" << slots[i].item << "]";
+		if (!slots[i].name.empty())
+		{
+			if (slots[i].icon != ' ' && slots[i].icon != '\0')
+			{
+				std::cout << "[" << slots[i].icon << "]";
+			}
+			else
+			{
+				std::cout << "[" << slots[i].name << "]";
+			}
+		}
+		else
+		{
+			std::cout << "[ ]";
+		}
 	}
 	std::cout << std::endl;
-	for (size_t i = 0; i < 3; i++)
+
+	// Mostrar cantidades debajo
+	for (size_t i = 0; i < 5; i++)
 	{
-		std::cout << " " << slots[i].amount << " ";
+		if (!slots[i].name.empty())
+			std::cout << " " << slots[i].amount << " ";
+		else
+			std::cout << " 0 ";
 	}
 	std::cout << std::endl << std::endl;
-
 }
 
 void PrintDungeonMap(std::vector<std::vector<char >>& Dungeon)

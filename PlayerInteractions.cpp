@@ -1,9 +1,10 @@
 #pragma once
 #include "PlayerInteractions.h"
 #include "DungeonSavingSys.h"
+#include "ItemManager.h"
+#include <cstdlib>
 
-
-
+// Print main menu and read selection
 void PrintMainmenu(int& MenuInput)
 {
 	do
@@ -13,29 +14,43 @@ void PrintMainmenu(int& MenuInput)
 		std::cin >> MenuInput;
 		system("cls");
 	} while (MenuInput < 0 || MenuInput > 3);
-
-
-
 }
+
+// Display player stats
 void MenuSTATS(Player& IPlayer)
 {
 	system("cls");
 	std::cout << "--- STATS ---" << std::endl;
-	std::cout << "Lifes = " << IPlayer.lifes << std::endl << "Gold Obtained = " << IPlayer.gold << std::endl << "Attack Chance = " << IPlayer.attk << std::endl << std::endl;
+	std::cout << "Lifes = " << IPlayer.lifes << std::endl;
+	std::cout << "Gold Obtained = " << IPlayer.gold << std::endl;
+	std::cout << std::endl;
 	system("pause");
 }
 
+// Read single-char player input and normalize to lowercase
 void PlayerInput(char& InputChar)
 {
 	std::cout << "MOVE [A / W / S / D] | SAV[E]| [Q]UIT | S[T]ATS" << std::endl;
 	std::cin >> InputChar;
-	// TRANSFORMS CHAR INTO LOWER CASE AUTOMATICALLY
 	InputChar = (char)tolower(InputChar);
-
 }
 
+// Sum total attack bonus from inventory (5 slots)
+static float SumInventoryBonus(const Item slots[5])
+{
+	float sum = 0.0f;
+	for (size_t i = 0; i < 5; ++i)
+	{
+		if (!slots[i].name.empty())
+		{
+			sum += slots[i].attkbonus * static_cast<float>(slots[i].amount);
+		}
+	}
+	return sum;
+}
 
-void ChestFound(Player& IPlayer)
+// Handle chest: grant gold and an item (stack or place in first empty slot). If inventory full, apply fallback bonus.
+void ChestFound(Player& IPlayer, const std::vector<Item>& items, Item slots[5])
 {
 	system("cls");
 	std::cout << "\t::: A CHEST WAS FOUND :::\n";
@@ -43,23 +58,74 @@ void ChestFound(Player& IPlayer)
 	IPlayer.gold += randGold;
 
 	std::cout << "YOU FOUND : " << randGold << " G" << std::endl;
+
+	if (!items.empty())
+	{
+		Item found = GetRandomItem(items);
+
+		bool stacked = false;
+		for (size_t i = 0; i < 5; ++i)
+		{
+			if (slots[i].name == found.name)
+			{
+				slots[i].amount += found.amount;
+				stacked = true;
+				break;
+			}
+		}
+
+		if (!stacked)
+		{
+			bool placed = false;
+			for (size_t i = 0; i < 5; ++i)
+			{
+				if (slots[i].name.empty())
+				{
+					slots[i] = found;
+					placed = true;
+					break;
+				}
+			}
+
+			if (!placed)
+			{
+				// Inventory full: apply temporary bonus to player as fallback
+				IPlayer.attk += found.attkbonus * found.amount;
+				std::cout << "Inventory full. Applied temporary bonus instead." << std::endl;
+			}
+		}
+
+		std::cout << "YOU OBTAINED ITEM: " << found.name << " (+" << found.attkbonus << " attack)";
+		if (found.icon != ' ') std::cout << " icon: '" << found.icon << "'";
+		std::cout << " x" << found.amount << std::endl;
+	}
+	else
+	{
+		std::cout << "No items available (items.txt missing or empty)." << std::endl;
+	}
+
 	system("pause");
 	system("cls");
-
-
-	// IPlayer.attk += Item attkbonus;
-
 }
 
-void StartCombat(Player& IPlayer)
+// Start combat using a simple rand() percentage comparison:
+// winChance = 1/3 + inventory bonus (capped to 1.0). Compare against rand() % 100.
+void StartCombat(Player& IPlayer, Item slots[5])
 {
 	system("cls");
 
-	float fightNumber = rand() % 3;
+	float base = 1.0f / 3.0f;
+	float bonus = SumInventoryBonus(slots);
+	float winChance = base + bonus;
+	if (winChance > 1.0f) winChance = 1.0f;
+
+	int winPercent = static_cast<int>(winChance * 100.0f);
+	int roll = rand() % 100; // 0..99
 
 	std::cout << "_- You got into a fight! -_" << std::endl;
+	std::cout << "Win chance = " << winChance << " (" << winPercent << "%)" << std::endl;
 
-	if (fightNumber > IPlayer.attk)
+	if (roll >= winPercent)
 	{
 		IPlayer.lifes--;
 		std::cout << "You lost the fight and lost a life..." << std::endl;
@@ -69,24 +135,17 @@ void StartCombat(Player& IPlayer)
 		std::cout << "You won the fight!" << std::endl;
 	}
 	system("pause");
-
 }
 
-
-
-
-void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<char>>& DungeonSave, std::string Fichero, Player& IPlayer, char& InputChar)
+// Handle player input and world interactions; pass items and inventory (5 slots).
+void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<char>>& DungeonSave, std::string Fichero, Player& IPlayer, char& InputChar, const std::vector<Item>& items, Item slots[5])
 {
-	// SEE PLAYER INPUT
 	PlayerInput(InputChar);
 
-	// LAST PLAYER'S POSITION
 	Vector2 IPlayerLastPos = IPlayer.position;
 
-	// INPUT CASES
 	switch (InputChar)
 	{
-		// MOVES
 	case 'w':
 		IPlayer.position.x--;
 		break;
@@ -104,43 +163,29 @@ void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std:
 		MenuSTATS(IPlayer);
 		break;
 
-		// SAVE
 	case 'e':
 		SaveGameData(Fichero, IPlayer);
 		break;
 
-		// QUIT
 	case 'q':
-
 		break;
 	}
 
-
-	// OBSTACLES
 	switch (Dungeon[IPlayer.position.x][IPlayer.position.y])
 	{
 	case WALL:
-		IPlayer.position = IPlayerLastPos; // Player Steps Back
+		IPlayer.position = IPlayerLastPos;
 		break;
 
 	case CHEST:
-		ChestFound(IPlayer);
-
+		ChestFound(IPlayer, items, slots);
 		break;
 	case ENEMY:
-
-		StartCombat(IPlayer);
-		
-		//IPlayer.lifes--;
+		StartCombat(IPlayer, slots);
 		break;
 	}
 
-	// LAST POSTION TURNS BACK INTO "."
 	Dungeon[IPlayerLastPos.x][IPlayerLastPos.y] = VOID;
-
-	// NEXT STEP IS A "P" OR AN "X" IF DEATH
 	Dungeon[IPlayer.position.x][IPlayer.position.y] = (IPlayer.lifes <= 0) ? 'X' : PLAYER;
-
-
 }
 

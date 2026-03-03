@@ -1,19 +1,19 @@
 #pragma once
 #include "CONS.h"
+#include "ItemManager.h"
 
-
-// PRINTS MAIN MENU OPTIONS
+// Print main menu options
 void PrintMainmenu(int& MenuInput);
 
-// READS PLAYER INPUT DURING GAMEPLAY (lowercas automatically)
+// Read player input during gameplay (automatically converts to lowercase)
 void PlayerInput(char& InputChar);
 
-// READS ITEMS FILE AND SELECTS 1 RANDOMLY AND GRANTS A RANDOM AMOUNT OF GOLD
-void ChestFound(Player& IPlayer);
+// Handle chest: select an item from the items list and add it to the inventory (5 slots)
+void ChestFound(Player& IPlayer, const std::vector<Item>& items, Item slots[5]);
 
-// 1/3 CHANCE OF WINNING A FIGHT AND NOT LOSING A LIFE. CHANCES INCREASE WITH CHEST ITEMS
-void StartCombat(Player& IPlayer);
+// Start a combat: base 1/3 chance + sum of inventory attack bonuses
+void StartCombat(Player& IPlayer, Item slots[5]);
 
-// ALL USER INTERACTION AND OBSTACLES 
-void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<char>>& DungeonSave, std::string Fichero, Player& IPlayer, char& InputChar);
+// Handle all player interactions and obstacles. Inventory (5 slots) and items list are passed in.
+void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<char>>& DungeonSave, std::string Fichero, Player& IPlayer, char& InputChar, const std::vector<Item>& items, Item slots[5]);
 
