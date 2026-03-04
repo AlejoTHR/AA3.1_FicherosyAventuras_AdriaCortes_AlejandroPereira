@@ -54,13 +54,14 @@ void SaveGameData(std::string File, Player& IPlayer)
 
 
 	////// PLAYER DATA
-	//// BIN ORDER == GOLD / POS X / POS Y / LIFES / NAME
+	//// BIN ORDER == GOLD / POS X / POS Y / LIFES / ATTK / NAME 
 
 	// STORAGING PLAYER DATA BUT STRNG
 	TMPplayer.gold = IPlayer.gold;
 	TMPplayer.position.x = IPlayer.position.x;
 	TMPplayer.position.y = IPlayer.position.y;
 	TMPplayer.lifes = IPlayer.lifes;
+	TMPplayer.attk = IPlayer.attk;
 	
 	// BIN GOLD
 	FileBin.write(reinterpret_cast<char*>(&TMPplayer.gold), sizeof(TMPplayer.gold));
@@ -73,6 +74,11 @@ void SaveGameData(std::string File, Player& IPlayer)
 
 	// BIN LIFES
 	FileBin.write(reinterpret_cast<char*>(&TMPplayer.lifes), sizeof(TMPplayer.lifes));
+
+	// BIN ATTK
+	FileBin.write(reinterpret_cast<char*>(&TMPplayer.attk), sizeof(TMPplayer.attk));
+	std::cout << IPlayer.attk;
+
 
 	// I HATE STRNGERS >:O
 	// BIN STRNG
@@ -116,6 +122,8 @@ void ReadSaveData(std::string Fichero, Player& IPlayer, bool& playerGetted)
 	FileBin.read(reinterpret_cast<char*>(&TMPplayer.position.y), sizeof(TMPplayer.position.y));
 	// BIN LIFES
 	FileBin.read(reinterpret_cast<char*>(&TMPplayer.lifes), sizeof(TMPplayer.lifes));
+	// BIN LIFES
+	FileBin.read(reinterpret_cast<char*>(&TMPplayer.attk), sizeof(TMPplayer.attk));
 	// BIN STRNG (I HATE STRNGERS >:O
 	// STRNG SIZE
 	size_t NameBinsize;
@@ -141,6 +149,7 @@ void ReadSaveData(std::string Fichero, Player& IPlayer, bool& playerGetted)
 	IPlayer.position.x = TMPplayer.position.x;
 	IPlayer.position.y = TMPplayer.position.y;
 	IPlayer.lifes = TMPplayer.lifes;
+	IPlayer.attk = TMPplayer.attk;
 	IPlayer.Name = TMPplayer.Name;
 	// LOADING SAVED DATA INTO PLAYER SYSTEM DATA
 	playerGetted = true;

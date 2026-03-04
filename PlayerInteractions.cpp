@@ -25,6 +25,7 @@ void MenuSTATS(Player& IPlayer)
 	std::cout << "--- STATS ---" << std::endl;
 	std::cout << "Lifes = " << IPlayer.lifes << std::endl;
 	std::cout << "Gold Obtained = " << IPlayer.gold << std::endl;
+	std::cout << "Total Attk = " << IPlayer.attk << std::endl;
 	std::cout << std::endl;
 	system("pause");
 }
@@ -56,11 +57,12 @@ void ChestFound(Player& IPlayer, const std::vector<Item>& items, Item slots[5])
 {
 	system("cls");
 	std::cout << "\t::: A CHEST WAS FOUND :::\n";
+
 	int randGold = 10 + rand() % (100 - 10);
+
 	IPlayer.gold += randGold;
 
 	std::cout << "YOU FOUND : " << randGold << " G" << std::endl;
-
 	if (!items.empty())
 	{
 		Item found = GetRandomItem(items);
@@ -86,7 +88,9 @@ void ChestFound(Player& IPlayer, const std::vector<Item>& items, Item slots[5])
 					slots[i] = found;
 					placed = true;
 					break;
+
 				}
+
 			}
 
 			if (!placed)
@@ -95,7 +99,12 @@ void ChestFound(Player& IPlayer, const std::vector<Item>& items, Item slots[5])
 				IPlayer.attk += found.attkbonus * found.amount;
 				std::cout << "Inventory full. Applied temporary bonus instead." << std::endl;
 			}
+
 		}
+
+
+		IPlayer.attk += found.attkbonus * found.amount;
+
 
 		std::cout << "YOU OBTAINED ITEM: " << found.name << " (+" << found.attkbonus << " attack)";
 		if (found.icon != ' ') std::cout << " icon: '" << found.icon << "'";

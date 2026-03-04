@@ -13,11 +13,6 @@ int main()
 
 	// PLAYER STRUCT
 	Player IPlayer;
-	IPlayer.Name = 'O';
-	IPlayer.position.x = 0;
-	IPlayer.position.y = 0;
-	IPlayer.lifes = 3;
-	IPlayer.attk = 0; // mantenemos attk en 0; la probabilidad base es 1/3
 
 	Item slots[5];
 	// Inicializar slots

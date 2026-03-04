@@ -22,9 +22,9 @@ struct Vector2 {
 struct Player {
 	std::string Name;
 	Vector2 position;
-	unsigned short lifes = 0;
+	unsigned short lifes = 3;
 	unsigned int  gold = 0;
-	float attk = 0;
+	float attk = 1;
 };
 
 struct Item {
