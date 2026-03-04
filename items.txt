@@ -2,5 +2,5 @@
 PocionAtac 0.15 ! 1
 EscutMagic 0.20 # 1
 AnilloFuria 0.10 @ 1
-Guanteletal 0.05 G 2
+GuanteLetal 0.05 G 2
 AmuletoSuerte 0.08 * 1

@@ -77,7 +77,6 @@ void SaveGameData(std::string File, Player& IPlayer)
 
 	// BIN ATTK
 	FileBin.write(reinterpret_cast<char*>(&TMPplayer.attk), sizeof(TMPplayer.attk));
-	std::cout << IPlayer.attk;
 
 
 	// I HATE STRNGERS >:O
@@ -151,6 +150,7 @@ void ReadSaveData(std::string Fichero, Player& IPlayer, bool& playerGetted)
 	IPlayer.lifes = TMPplayer.lifes;
 	IPlayer.attk = TMPplayer.attk;
 	IPlayer.Name = TMPplayer.Name;
+	IPlayer.attk = TMPplayer.attk;
 	// LOADING SAVED DATA INTO PLAYER SYSTEM DATA
 	playerGetted = true;
 

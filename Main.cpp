@@ -6,6 +6,7 @@
 
 int main()
 {
+	srand(time(NULL));
 	// FINAL DUNGEON
 	std::vector<std::vector<char >> Dungeon;
 	// DUNGEON SAVE VARIABLE
@@ -40,6 +41,11 @@ int main()
 	int MenuInput = 0;
 
 	bool endRun = false;
+	bool Defeat = false;
+	unsigned int EnemyCount = 0;
+
+
+
 
 	PrintMainmenu(MenuInput); // MAIN MENU UI
 
@@ -49,7 +55,7 @@ int main()
 		{
 			ReadSaveData("partida.dat", IPlayer, playerGetted); // PLAYER GETTED = TRUE AND SKIPS MAP READING FOR P IN NEXT FUNCTION
 		}
-		ReadMap(Dungeon, "Sala.csv", playerGetted);
+		ReadMap(Dungeon, "Sala.csv", playerGetted, EnemyCount);
 
 		StartDungeonMap(Dungeon, IPlayer, playerGetted);
 
@@ -61,16 +67,20 @@ int main()
 			PrintDungeonMap(Dungeon);
 
 			// Pasamos la lista de items y el inventario (5 slots)
-			PlayerInteraction(Dungeon, DungeonSave, "partida.dat", IPlayer, InputChar, items, slots, endRun);
+			PlayerInteraction(Dungeon, "partida.dat", IPlayer, InputChar, items, slots, endRun, EnemyCount, Defeat);
 
 			system("cls");
-		} while (IPlayer.lifes > 0 && endRun != true);
+		} while (IPlayer.lifes > 0 && endRun != true && EnemyCount > 0);
 
 		if (IPlayer.lifes == 0) 
 		{
 			std::cout << "YOU DIED" << std::endl;
 			system("pause");
 			system("cls");
+		}
+		if (EnemyCount == 0)
+		{
+			DungeonCleared(IPlayer, "save.dat");
 		}
 
 	}

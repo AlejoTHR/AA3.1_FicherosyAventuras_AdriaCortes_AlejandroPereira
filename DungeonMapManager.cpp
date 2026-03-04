@@ -1,7 +1,7 @@
 #pragma once
 #include "DungeonMapManager.h"
 
-void ReadMap(std::vector<std::vector<char >>& Dungeon, std::string Fichero, bool& playerGetted)
+void ReadMap(std::vector<std::vector<char >>& Dungeon, std::string Fichero, bool& playerGetted, unsigned int& EnemyCount)
 {
 	std::ifstream File;
 	File.open(Fichero);
@@ -21,6 +21,7 @@ void ReadMap(std::vector<std::vector<char >>& Dungeon, std::string Fichero, bool
 
 		for (unsigned int i = 0; i < Line.size(); i++)
 		{
+			if (Line[i] == ENEMY) EnemyCount++;
 			if (Line[i] == ';')	continue; // IF ";" IS READED; DOES NOT READ IR
 
 			else if (Line[i] == '.') tmpLine.push_back(VOID); // IF ":" IS READED, KEEPS IT

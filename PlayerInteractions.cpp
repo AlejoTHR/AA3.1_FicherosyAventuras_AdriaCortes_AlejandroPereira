@@ -25,7 +25,7 @@ void MenuSTATS(Player& IPlayer)
 	std::cout << "--- STATS ---" << std::endl;
 	std::cout << "Lifes = " << IPlayer.lifes << std::endl;
 	std::cout << "Gold Obtained = " << IPlayer.gold << std::endl;
-	std::cout << "Total Attk = " << IPlayer.attk << std::endl;
+	std::cout << "Attk Value= " << IPlayer.attk << std::endl;
 	std::cout << std::endl;
 	system("pause");
 }
@@ -121,13 +121,12 @@ void ChestFound(Player& IPlayer, const std::vector<Item>& items, Item slots[5])
 
 // Start combat using a simple rand() percentage comparison:
 // winChance = 1/3 + inventory bonus (capped to 1.0). Compare against rand() % 100.
-void StartCombat(Player& IPlayer, Item slots[5])
+void StartCombat(Player& IPlayer, Item slots[5], unsigned int& EnemyCount, bool& Defeat)
 {
 	system("cls");
 
-	float base = 1.0f / 3.0f;
 	float bonus = SumInventoryBonus(slots);
-	float winChance = base + bonus;
+	float winChance = IPlayer.attk + bonus;
 	if (winChance > 1.0f) winChance = 1.0f;
 
 	int winPercent = static_cast<int>(winChance * 100.0f);
@@ -136,20 +135,33 @@ void StartCombat(Player& IPlayer, Item slots[5])
 	std::cout << "_- You got into a fight! -_" << std::endl;
 	std::cout << "Win chance = " << winChance << " (" << winPercent << "%)" << std::endl;
 
-	if (roll >= winPercent)
+	if (roll > winPercent)
 	{
 		IPlayer.lifes--;
 		std::cout << "You lost the fight and lost a life..." << std::endl;
+		Defeat = true;
 	}
 	else
 	{
 		std::cout << "You won the fight!" << std::endl;
+		EnemyCount--;
+		Defeat = false;
 	}
 	system("pause");
 }
 
+void DungeonCleared(Player IPlayer, std::string File)
+{
+	std::cout << "\n\n\t\t YOU CLEARED THE DUNGEON" << std::endl;
+	system("pause");
+	system("cls");
+	MenuSTATS(IPlayer);
+	SaveGameData(File, IPlayer);;
+	system("cls");
+}
+
 // Handle player input and world interactions; pass items and inventory (5 slots).
-void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std::vector<char>>& DungeonSave, std::string Fichero, Player& IPlayer, char& InputChar, const std::vector<Item>& items, Item slots[5], bool& endRun)
+void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::string File, Player& IPlayer, char& InputChar, const std::vector<Item>& items, Item slots[5], bool& endRun, unsigned int& EnemyCount, bool& Defeat)
 {
 	PlayerInput(InputChar);
 
@@ -175,7 +187,7 @@ void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std:
 		break;
 
 	case 'e':
-		SaveGameData(Fichero, IPlayer);
+		SaveGameData(File, IPlayer);
 		break;
 
 	case 'q':
@@ -196,11 +208,16 @@ void PlayerInteraction(std::vector<std::vector<char>>& Dungeon, std::vector<std:
 		ChestFound(IPlayer, items, slots);
 		break;
 	case ENEMY:
-		StartCombat(IPlayer, slots);
+		StartCombat(IPlayer, slots, EnemyCount, Defeat);
+		if (Defeat)
+		{
+			!Defeat;
+			IPlayer.position = IPlayerLastPos;
+		}
 		break;
 	}
 
 	Dungeon[IPlayerLastPos.x][IPlayerLastPos.y] = VOID;
-	Dungeon[IPlayer.position.x][IPlayer.position.y] = (IPlayer.lifes <= 0) ? 'X' : PLAYER;
+	Dungeon[IPlayer.position.x][IPlayer.position.y] = PLAYER;
 }
 

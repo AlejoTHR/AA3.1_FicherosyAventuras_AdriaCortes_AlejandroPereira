@@ -24,7 +24,7 @@ struct Player {
 	Vector2 position;
 	unsigned short lifes = 3;
 	unsigned int  gold = 0;
-	float attk = 1;
+	float attk = 1.0f/3.0f;
 };
 
 struct Item {
